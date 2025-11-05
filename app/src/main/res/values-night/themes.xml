@@ -1,0 +1,18 @@
+<resources>
+    <style name="Theme.PlantCare" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">#7ED957</item>
+        <item name="colorOnPrimary">#0B1A07</item>
+        <item name="colorSecondary">#98E07A</item>
+        <item name="colorOnSecondary">#0B1A07</item>
+
+        <item name="materialButtonStyle">@style/Widget.PlantCare.Button</item>
+        <item name="textInputStyle">@style/Widget.PlantCare.TextInputLayout</item>
+    </style>
+
+    <style name="Widget.PlantCare.Button" parent="Widget.Material3.Button">
+        <item name="cornerRadius">20dp</item>
+    </style>
+
+    <style name="Widget.PlantCare.TextInputLayout"
+        parent="Widget.Material3.TextInputLayout.OutlinedBox" />
+</resources>

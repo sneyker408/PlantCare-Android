@@ -1,0 +1,24 @@
+<resources>
+    <!-- Tema claro Material 3 sin action bar -->
+    <style name="Theme.PlantCare" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+
+        <!-- Barra de estado clara -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Estilos de componentes -->
+        <item name="materialButtonStyle">@style/Widget.PlantCare.Button</item>
+        <item name="textInputStyle">@style/Widget.PlantCare.TextInputLayout</item>
+    </style>
+
+    <style name="Widget.PlantCare.Button" parent="Widget.Material3.Button">
+        <item name="cornerRadius">20dp</item>
+    </style>
+
+    <style name="Widget.PlantCare.TextInputLayout"
+        parent="Widget.Material3.TextInputLayout.OutlinedBox" />
+</resources>
