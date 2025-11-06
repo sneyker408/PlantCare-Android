@@ -12,7 +12,20 @@
           "package_name": "com.sneyker.plantcare"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "943410846529-9718gc3sffsovamhhbjblr847nm5mngo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sneyker.plantcare",
+            "certificate_hash": "fa5163d8b5c09d95de8bdc71c7187d6bb18727af"
+          }
+        },
+        {
+          "client_id": "943410846529-04vn59tom6lomn1jouic630emfh48v4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBg-3PnV2lYl0VYh6Faye4RdJ8pivwYLP4"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943410846529-04vn59tom6lomn1jouic630emfh48v4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

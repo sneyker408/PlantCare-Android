@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Requerido para Firebase/Google Sign-In -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,8 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlantCare">
 
+        <!-- ⬅️ Pantalla que arranca primero -->
         <activity
-            android:name=".ui.PlantListActivity"
+            android:name=".ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +26,25 @@
             </intent-filter>
         </activity>
 
+        <!-- Login -->
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="false" />
+
+        <!-- Home / menú principal -->
+        <activity
+            android:name=".ui.HomeActivity"
+            android:exported="false" />
+
+        <!-- Lista de plantas -->
+        <activity
+            android:name=".ui.PlantListActivity"
+            android:exported="false" />
+
+        <!-- Crear/Editar planta -->
         <activity
             android:name=".ui.AddEditPlantActivity"
             android:exported="false" />
 
     </application>
-
 </manifest>
