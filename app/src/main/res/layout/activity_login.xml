@@ -5,49 +5,76 @@
     android:orientation="vertical"
     android:padding="24dp"
     android:gravity="center"
-    android:background="@android:color/white">
+    android:background="#0B3D2E">
 
+    <!-- Título -->
     <TextView
+        android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PlantCare"
-        android:textSize="28sp"
+        android:text="🌿 PlantCare"
+        android:textSize="30sp"
         android:textStyle="bold"
-        android:layout_marginBottom="24dp"
-        android:textColor="@android:color/black" />
+        android:letterSpacing="0.02"
+        android:layout_marginBottom="28dp"
+        android:textColor="@android:color/white" />
 
+    <!-- Correo -->
     <EditText
         android:id="@+id/edtEmail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Correo electrónico"
-        android:inputType="textEmailAddress" />
+        android:layout_height="48dp"
+        android:hint="✉️  Correo electrónico"
+        android:inputType="textEmailAddress"
+        android:textColor="@android:color/white"
+        android:textColorHint="#B2DFDB"
+        android:backgroundTint="#80CBC4"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp" />
 
+    <!-- Contraseña -->
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Contraseña"
+        android:layout_height="48dp"
+        android:hint="🔒  Contraseña"
         android:inputType="textPassword"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="#B2DFDB"
+        android:backgroundTint="#80CBC4"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp" />
 
+    <!-- Botón principal -->
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Iniciar sesión"
-        android:layout_marginTop="20dp" />
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:text="🚀 Iniciar sesión"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#2E7D32" />
 
+    <!-- Botón secundario -->
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Crear cuenta"
-        android:layout_marginTop="10dp" />
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:text="🆕 Crear cuenta"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="#1A1A1A"
+        android:backgroundTint="#FFC107" />
 
+    <!-- Google Sign-In -->
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btnGoogle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="18dp" />
+
 </LinearLayout>

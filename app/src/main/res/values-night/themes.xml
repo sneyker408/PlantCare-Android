@@ -1,18 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.PlantCare" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="colorPrimary">#7ED957</item>
-        <item name="colorOnPrimary">#0B1A07</item>
-        <item name="colorSecondary">#98E07A</item>
-        <item name="colorOnSecondary">#0B1A07</item>
+    <!-- En modo oscuro solo sobrescribimos colores clave -->
+    <style name="Theme.PlantCare" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontFamily">sans-serif</item>
 
-        <item name="materialButtonStyle">@style/Widget.PlantCare.Button</item>
-        <item name="textInputStyle">@style/Widget.PlantCare.TextInputLayout</item>
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+
+        <item name="android:colorBackground">#101311</item>
+        <item name="colorSurface">#121512</item>
+        <item name="colorOnSurface">#E2E5E2</item>
+
+        <item name="android:windowAnimationStyle">@style/Anim</item>
+
+        <item name="materialButtonStyle">@style/Widget.PlantCare.Button.Filled</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.PlantCare.Button.Outlined</item>
     </style>
-
-    <style name="Widget.PlantCare.Button" parent="Widget.Material3.Button">
-        <item name="cornerRadius">20dp</item>
-    </style>
-
-    <style name="Widget.PlantCare.TextInputLayout"
-        parent="Widget.Material3.TextInputLayout.OutlinedBox" />
 </resources>

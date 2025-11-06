@@ -1,24 +1,48 @@
-<resources>
-    <!-- Tema claro Material 3 sin action bar -->
-    <style name="Theme.PlantCare" parent="Theme.Material3.Light.NoActionBar">
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Tema base DayNight para toda la app -->
+    <style name="Theme.PlantCare" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Tipografía: usar nombre directo, no @android:font/... -->
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontFamily">sans-serif</item>
+
+        <!-- Colores claros por defecto; en night se sobrescriben -->
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
-        <item name="colorSecondary">@color/md_theme_light_secondary</item>
-        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
 
-        <!-- Barra de estado clara -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
 
-        <!-- Estilos de componentes -->
-        <item name="materialButtonStyle">@style/Widget.PlantCare.Button</item>
-        <item name="textInputStyle">@style/Widget.PlantCare.TextInputLayout</item>
+        <!-- Animación global de transiciones entre actividades -->
+        <item name="android:windowAnimationStyle">@style/Anim</item>
+
+        <!-- Botones Material por defecto -->
+        <item name="materialButtonStyle">@style/Widget.PlantCare.Button.Filled</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.PlantCare.Button.Outlined</item>
     </style>
 
-    <style name="Widget.PlantCare.Button" parent="Widget.Material3.Button">
-        <item name="cornerRadius">20dp</item>
+    <!-- Estilo para botones “filled” -->
+    <style name="Widget.PlantCare.Button.Filled" parent="Widget.Material3.Button">
+        <item name="cornerRadius">28dp</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="Widget.PlantCare.TextInputLayout"
-        parent="Widget.Material3.TextInputLayout.OutlinedBox" />
+    <!-- Estilo para botones “outlined” -->
+    <style name="Widget.PlantCare.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">28dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="strokeColor">@color/md_theme_light_outline</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- Conjunto de animaciones para abrir/cerrar actividades -->
+    <style name="Anim">
+        <item name="android:activityOpenEnterAnimation">@anim/fade_in_up</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_in_up</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in_up</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_in_up</item>
+    </style>
+
 </resources>

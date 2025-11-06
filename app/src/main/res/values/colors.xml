@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Palette PlantCare -->
+    <!-- Palette clara -->
     <color name="md_theme_light_primary">#2E7D32</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
-    <color name="md_theme_light_secondary">#8BC34A</color>
-    <color name="md_theme_light_onSecondary">#0B1A07</color>
-    <color name="md_theme_light_background">#F7F8F5</color>
-    <color name="md_theme_light_onBackground">#1B1C18</color>
+
+    <color name="md_theme_light_background">#F4F6F3</color>
+    <color name="md_theme_light_onBackground">#1B1B1B</color>
+
     <color name="md_theme_light_surface">#FFFFFF</color>
-    <color name="md_theme_light_onSurface">#1B1C18</color>
-    <color name="md_theme_light_outline">#C7D1C5</color>
+    <color name="md_theme_light_onSurface">#1B1B1B</color>
+
+    <!-- Borde / contornos para cards y outlines -->
+    <color name="md_theme_light_outline">#D0D7CD</color>
+
+    <color name="md_theme_light_error">#B3261E</color>
 </resources>
