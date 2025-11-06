@@ -12,18 +12,32 @@
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="🌿 PlantCare"
-        android:textSize="30sp"
+        android:text="🆕 Crear cuenta"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:letterSpacing="0.02"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="20dp"
         android:textColor="@android:color/white" />
+
+    <!-- Nombre -->
+    <EditText
+        android:id="@+id/edtName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="👤  Nombre"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/white"
+        android:textColorHint="#B2DFDB"
+        android:backgroundTint="#80CBC4"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp" />
 
     <!-- Correo -->
     <EditText
         android:id="@+id/edtEmail"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_marginTop="12dp"
         android:hint="✉️  Correo electrónico"
         android:inputType="textEmailAddress"
         android:textColor="@android:color/white"
@@ -46,45 +60,42 @@
         android:paddingStart="14dp"
         android:paddingEnd="14dp" />
 
-    <!-- Olvidaste contraseña -->
-    <TextView
-        android:id="@+id/txtForgot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="¿Olvidaste tu contraseña?"
-        android:textColor="#FFEB3B"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp" />
-
-    <!-- Botón principal -->
-    <Button
-        android:id="@+id/btnLogin"
+    <!-- Confirmar -->
+    <EditText
+        android:id="@+id/edtConfirm"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:text="🚀 Iniciar sesión"
+        android:layout_marginTop="12dp"
+        android:hint="✅  Confirmar contraseña"
+        android:inputType="textPassword"
+        android:textColor="@android:color/white"
+        android:textColorHint="#B2DFDB"
+        android:backgroundTint="#80CBC4"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp" />
+
+    <!-- Crear -->
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="18dp"
+        android:text="Crear cuenta"
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:backgroundTint="#2E7D32" />
 
-    <!-- Botón Crear cuenta -->
+    <!-- Volver -->
     <Button
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnBack"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:text="🆕 Crear cuenta"
+        android:layout_marginTop="10dp"
+        android:text="Volver"
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textColor="#1A1A1A"
         android:backgroundTint="#FFC107" />
-
-    <!-- Botón Google (blanco oficial de Google; si lo quieres de color, usamos un layout custom) -->
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btnGoogle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp" />
 
 </LinearLayout>

@@ -43,9 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // -----------------------------
         // Login con correo y contraseña
-        // -----------------------------
         binding.btnLogin.setOnClickListener(v -> {
             String email = binding.edtEmail.getText().toString().trim();
             String pass  = binding.edtPassword.getText().toString().trim();
@@ -58,24 +56,15 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
         });
 
-        // -----------------------------
-        // Registro con correo/contraseña
-        // -----------------------------
-        binding.btnRegister.setOnClickListener(v -> {
-            String email = binding.edtEmail.getText().toString().trim();
-            String pass  = binding.edtPassword.getText().toString().trim();
+        // Abrir pantalla de Registro
+        binding.btnRegister.setOnClickListener(v ->
+                startActivity(new Intent(this, RegisterActivity.class)));
 
-            if (!validateEmailPass(email, pass)) return;
+        // Abrir pantalla de Recuperar contraseña
+        binding.txtForgot.setOnClickListener(v ->
+                startActivity(new Intent(this, ResetPasswordActivity.class)));
 
-            auth.createUserWithEmailAndPassword(email, pass)
-                    .addOnSuccessListener(a -> goHome())
-                    .addOnFailureListener(e ->
-                            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
-        });
-
-        // -----------------------------
-        // Google Sign-In (a prueba de crash)
-        // -----------------------------
+        // Google Sign-In
         int webClientIdRes = getResources().getIdentifier(
                 "default_web_client_id", "string", getPackageName());
 
@@ -94,11 +83,9 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(intent, RC_GOOGLE);
             });
         } else {
-            // Si aún no está configurado (falta SHA-1 o json), desactiva el botón para evitar crash
+            // Si aún no está configurado, desactiva el botón para evitar crash
             binding.btnGoogle.setEnabled(false);
             binding.btnGoogle.setAlpha(0.5f);
-            // Si quieres, muestra un aviso:
-            // Toast.makeText(this, "Google Sign-In no está configurado aún", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -113,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (account != null) {
                     AuthCredential credential =
                             GoogleAuthProvider.getCredential(account.getIdToken(), null);
-                    auth.signInWithCredential(credential)
+                    FirebaseAuth.getInstance().signInWithCredential(credential)
                             .addOnSuccessListener(a -> goHome())
                             .addOnFailureListener(e ->
                                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
@@ -141,5 +128,6 @@ public class LoginActivity extends AppCompatActivity {
     private void goHome() {
         startActivity(new Intent(this, HomeActivity.class));
         finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
