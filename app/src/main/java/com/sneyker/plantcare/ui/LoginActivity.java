@@ -43,11 +43,10 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Login con correo y contraseña
+        // Email/Password
         binding.btnLogin.setOnClickListener(v -> {
             String email = binding.edtEmail.getText().toString().trim();
             String pass  = binding.edtPassword.getText().toString().trim();
-
             if (!validateEmailPass(email, pass)) return;
 
             auth.signInWithEmailAndPassword(email, pass)
@@ -56,15 +55,13 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
         });
 
-        // Abrir pantalla de Registro
+        // Ir a registro / recuperar
         binding.btnRegister.setOnClickListener(v ->
                 startActivity(new Intent(this, RegisterActivity.class)));
-
-        // Abrir pantalla de Recuperar contraseña
         binding.txtForgot.setOnClickListener(v ->
                 startActivity(new Intent(this, ResetPasswordActivity.class)));
 
-        // Google Sign-In
+        // ------- Google Sign-In -------
         int webClientIdRes = getResources().getIdentifier(
                 "default_web_client_id", "string", getPackageName());
 
@@ -79,11 +76,16 @@ public class LoginActivity extends AppCompatActivity {
             googleClient = GoogleSignIn.getClient(this, gso);
 
             binding.btnGoogle.setOnClickListener(v -> {
-                Intent intent = googleClient.getSignInIntent();
-                startActivityForResult(intent, RC_GOOGLE);
+                // << CLAVE >>: limpiar la cuenta cacheada ANTES de abrir el intent
+                googleClient.signOut().addOnCompleteListener(done -> {
+                    Intent intent = googleClient.getSignInIntent();
+                    // Este flag ayuda a evitar que el sistema re-use la tarea previa
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivityForResult(intent, RC_GOOGLE);
+                });
             });
+
         } else {
-            // Si aún no está configurado, desactiva el botón para evitar crash
             binding.btnGoogle.setEnabled(false);
             binding.btnGoogle.setAlpha(0.5f);
         }
