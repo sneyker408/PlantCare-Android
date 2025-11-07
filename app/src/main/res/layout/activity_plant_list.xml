@@ -4,30 +4,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_light_background">
+    android:background="#0B3D2E">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar"
+    <!-- AppBar -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:title="@string/app_name"
-        app:titleCentered="true"
-        app:layout_scrollFlags="scroll|enterAlways" />
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="#124C3D"
+        android:elevation="4dp">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#124C3D"
+            android:title="🌿 PlantCare"
+            android:titleTextColor="#FFFFFF"
+            app:titleCentered="true" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Lista -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:clipToPadding="false" />
+        android:clipToPadding="false"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="88dp"   
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <!-- FAB Añadir -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
+        android:contentDescription="Añadir planta"
         app:srcCompat="@android:drawable/ic_input_add"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        app:backgroundTint="#2E7D32"
+        app:tint="#FFFFFF"
+        app:borderWidth="0dp"
+        app:layout_anchor="@id/recycler"
+        app:layout_anchorGravity="bottom|end" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

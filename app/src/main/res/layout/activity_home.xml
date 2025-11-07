@@ -1,40 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:gravity="center"
-    android:background="@drawable/background_plants"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#0B3D2E">
 
-    <TextView
-        android:id="@+id/txtTitulo"
-        android:text="Bienvenido a PlantCare 🌿"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btnMisPlantas"
-        android:text="🌱 Ver mis plantas"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"/>
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp">
 
-    <Button
-        android:id="@+id/btnAgregar"
-        android:text="➕ Agregar nueva planta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"/>
+        <!-- Título -->
+        <TextView
+            android:id="@+id/txtTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🌿 Bienvenido a PlantCare"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.02"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="24dp" />
 
-    <Button
-        android:id="@+id/btnCerrarSesion"
-        android:text="Cerrar sesión"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"/>
-</LinearLayout>
+        <!-- Botón: Ver mis plantas (primario) -->
+        <Button
+            android:id="@+id/btnMisPlantas"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="🌱 Ver mis plantas"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#2E7D32"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Botón: Agregar nueva planta (acento ámbar) -->
+        <Button
+            android:id="@+id/btnAgregar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="➕ Agregar nueva planta"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A"
+            android:backgroundTint="#FFC107"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Botón: Cerrar sesión (alerta) -->
+        <Button
+            android:id="@+id/btnCerrarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="⏻  Cerrar sesión"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#E53935"
+            android:layout_marginTop="24dp" />
+
+        <!-- (Opcional) espacio inferior por seguridad en pantallas con gestos -->
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="16dp" />
+
+    </LinearLayout>
+</ScrollView>
