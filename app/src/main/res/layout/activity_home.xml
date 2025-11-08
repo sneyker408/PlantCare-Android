@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -12,24 +13,51 @@
         android:gravity="center_horizontal"
         android:padding="24dp">
 
+        <!-- Top bar minimal -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/topTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/home_top_title"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white" />
+
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/home_menu_cd"
+                app:tint="@android:color/white"
+                android:src="@android:drawable/ic_menu_more" />
+        </LinearLayout>
+
         <!-- Título -->
         <TextView
             android:id="@+id/txtTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🌿 Bienvenido a PlantCare"
+            android:text="@string/home_welcome"
             android:textSize="28sp"
             android:textStyle="bold"
             android:letterSpacing="0.02"
             android:textColor="@android:color/white"
             android:layout_marginBottom="24dp" />
 
-        <!-- Botón: Ver mis plantas (primario) -->
+        <!-- Ver mis plantas -->
         <Button
             android:id="@+id/btnMisPlantas"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="🌱 Ver mis plantas"
+            android:text="@string/home_btn_my_plants"
             android:textAllCaps="false"
             android:textStyle="bold"
             android:textColor="@android:color/white"
@@ -37,34 +65,44 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="10dp" />
 
-        <!-- Botón: Agregar nueva planta (acento ámbar) -->
+        <!-- Agregar nueva planta -->
         <Button
             android:id="@+id/btnAgregar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="➕ Agregar nueva planta"
+            android:text="@string/home_btn_add"
             android:textAllCaps="false"
             android:textStyle="bold"
             android:textColor="#1A1A1A"
             android:backgroundTint="#FFC107"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Comunidad -->
+        <Button
+            android:id="@+id/btnComunidad"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/home_btn_community"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#26A69A"
             android:layout_marginBottom="16dp" />
 
-        <!-- Botón: Cerrar sesión (alerta) -->
+        <!-- Cerrar sesión -->
         <Button
             android:id="@+id/btnCerrarSesion"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="⏻  Cerrar sesión"
+            android:text="@string/home_btn_logout"
             android:textAllCaps="false"
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:backgroundTint="#E53935"
-            android:layout_marginTop="24dp" />
+            android:layout_marginTop="16dp" />
 
-        <!-- (Opcional) espacio inferior por seguridad en pantallas con gestos -->
         <Space
             android:layout_width="0dp"
             android:layout_height="16dp" />
-
     </LinearLayout>
 </ScrollView>

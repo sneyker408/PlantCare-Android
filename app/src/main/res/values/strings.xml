@@ -1,3 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App -->
     <string name="app_name">PlantCare</string>
+
+    <!-- Home (títulos y botones) -->
+    <string name="home_top_title">PlantCare</string>
+    <string name="home_menu_cd">Menú</string>
+    <string name="home_welcome">Bienvenido a PlantCare</string>
+    <string name="home_btn_my_plants">🌱 Ver mis plantas</string>
+    <string name="home_btn_add">➕ Agregar nueva planta</string>
+    <string name="home_btn_community">🌍 Comunidad (reseñas)</string>
+    <string name="home_btn_logout">⏻  Cerrar sesión</string>
+
+    <!-- Feed / Comunidad -->
+    <string name="feed_title">🌎 Comunidad (reseñas)</string>
+    <string name="feed_back_cd">Volver</string>
+    <string name="feed_desc">Aquí verás publicaciones de la comunidad: fotos de plantas, likes, comentarios y compartir.</string>
+    <string name="feed_new_post">➕ Nuevo post</string>
+
+    <!-- Menú emergente -->
+    <string name="menu_feed">Comunidad 🌍</string>
+    <string name="menu_profile">Mi perfil</string>
+    <string name="menu_settings">Configuración</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="menu_logout">Cerrar sesión</string>
+
+    <!-- Diálogo Acerca de -->
+    <string name="about_title">Acerca de</string>
+    <string name="about_ok">Aceptar</string>
 </resources>

@@ -52,6 +52,12 @@
         <activity android:name=".ui.ResetPasswordActivity"
             android:exported="false"/>
 
+        <activity android:name=".ui.FeedActivity"
+            android:exported="false"/>
+
+
+
+
 
     </application>
 </manifest>
