@@ -1,31 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- App -->
     <string name="app_name">PlantCare</string>
 
-    <!-- Home (títulos y botones) -->
-    <string name="home_top_title">PlantCare</string>
-    <string name="home_menu_cd">Menú</string>
-    <string name="home_welcome">Bienvenido a PlantCare</string>
-    <string name="home_btn_my_plants">🌱 Ver mis plantas</string>
-    <string name="home_btn_add">➕ Agregar nueva planta</string>
-    <string name="home_btn_community">🌍 Comunidad (reseñas)</string>
-    <string name="home_btn_logout">⏻  Cerrar sesión</string>
+    <!-- Login y registro -->
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="email">Email</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="olvidaste_contrasena">¿Olvidaste tu contraseña?</string>
+    <string name="no_tienes_cuenta">¿No tienes cuenta?</string>
+    <string name="ya_tienes_cuenta">¿Ya tienes cuenta?</string>
+    <string name="crear_cuenta">Crear cuenta</string>
+    <string name="nombre">Nombre</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="volver">Volver</string>
 
-    <!-- Feed / Comunidad -->
-    <string name="feed_title">🌎 Comunidad (reseñas)</string>
-    <string name="feed_back_cd">Volver</string>
-    <string name="feed_desc">Aquí verás publicaciones de la comunidad: fotos de plantas, likes, comentarios y compartir.</string>
-    <string name="feed_new_post">➕ Nuevo post</string>
+    <!-- Verificar código -->
+    <string name="verificar_codigo">Verificar código</string>
+    <string name="ingresa_codigo">Código de 6 dígitos</string>
+    <string name="ingresa_codigo_mensaje">Ingresa el código de verificación que enviamos a tu correo</string>
+    <string name="verificar">Verificar</string>
 
-    <!-- Menú emergente -->
-    <string name="menu_feed">Comunidad 🌍</string>
-    <string name="menu_profile">Mi perfil</string>
-    <string name="menu_settings">Configuración</string>
-    <string name="menu_about">Acerca de</string>
-    <string name="menu_logout">Cerrar sesión</string>
+    <!-- Cambiar contraseña -->
+    <string name="nueva_contrasena">Nueva contraseña</string>
+    <string name="confirmar_contrasena">Confirmar contraseña</string>
+    <string name="guardar_contrasena">Guardar contraseña</string>
+    <string name="recuperar_cuenta">Recuperar cuenta</string>
+    <string name="enviar_correo">Enviar correo</string>
 
-    <!-- Diálogo Acerca de -->
+    <!-- Plantas -->
+    <string name="agregar_planta">Agregar planta</string>
+    <string name="nombre_planta">Nombre de la planta</string>
+    <string name="especie">Especie</string>
+    <string name="proximo_riego">Próximo riego</string>
+    <string name="regar_ahora">Regar ahora</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="riego">Riego</string>
+    <string name="dias_riego">Días entre riegos</string>
+    <string name="notas">Notas (opcional)</string>
+
+    <!-- General -->
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="mis_plantas">Mis Plantas</string>
+    <string name="feed">Feed</string>
+    <string name="comunidad">Comunidad</string>
+    <string name="agregar">Agregar</string>
     <string name="about_title">Acerca de</string>
     <string name="about_ok">Aceptar</string>
+
+    <!-- Accesibilidad -->
+    <string name="descripcion_icono_planta">Icono de planta</string>
+    <string name="descripcion_boton_agregar">Agregar nueva planta</string>
+
+    <string name="sin_fecha_programada">Sin fecha programada</string>
+
 </resources>

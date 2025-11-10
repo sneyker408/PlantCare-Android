@@ -1,76 +1,132 @@
 package com.sneyker.plantcare.ui;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.sneyker.plantcare.R;
 import com.sneyker.plantcare.data.PlantRepo;
-import com.sneyker.plantcare.databinding.ActivityAddEditPlantBinding;
 import com.sneyker.plantcare.model.Plant;
-
-import java.util.Calendar;
 
 public class AddEditPlantActivity extends AppCompatActivity {
 
-    private ActivityAddEditPlantBinding b;
-    private final PlantRepo repo = new PlantRepo();
+    private EditText edtName;
+    private EditText edtSpecies;
+    private EditText edtFreq;
+    private EditText edtNotes;
+    private Button btnSave;
+
+    private PlantRepo repo;
     private String plantId;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        b = ActivityAddEditPlantBinding.inflate(getLayoutInflater());
-        setContentView(b.getRoot());
+        setContentView(R.layout.activity_add_edit_plant);
 
-        plantId = getIntent().getStringExtra("id");
-        if (plantId != null && !plantId.isEmpty()) {
-            repo.getById(plantId).addOnSuccessListener(this::fillForm);
-        }
+        // Verificar autenticación
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
 
-        b.btnSave.setOnClickListener(v -> save());
-    }
-
-    private void fillForm(DocumentSnapshot doc) {
-        Plant p = doc.toObject(Plant.class);
-        if (p == null) return;
-        b.edtName.setText(p.getName());
-        b.edtSpecies.setText(p.getSpecies());
-        b.edtFreq.setText(String.valueOf(p.getFreqDays()));
-        b.edtNotes.setText(p.getNotes());
-    }
-
-    private void save() {
-        String name = b.edtName.getText().toString().trim();
-        String species = b.edtSpecies.getText().toString().trim();
-        int freq = safeInt(b.edtFreq.getText().toString().trim());
-        String notes = b.edtNotes.getText().toString().trim();
-
-        if (name.isEmpty()) {
-            Toast.makeText(this, "Nombre requerido", Toast.LENGTH_SHORT).show();
+        if (currentUser == null) {
+            finish();
             return;
         }
 
-        long now = System.currentTimeMillis();
-        long next = addDays(now, Math.max(1, freq));
+        // Inicializar repositorio
+        repo = new PlantRepo(currentUser.getUid());
 
-        Plant p = new Plant(plantId, name, species, freq, now, next, notes, null);
-        repo.save(p).addOnSuccessListener(x -> {
-            Toast.makeText(this, "Guardado", Toast.LENGTH_SHORT).show();
-            finish();
+        // Inicializar vistas
+        edtName = findViewById(R.id.editTextName);
+        edtSpecies = findViewById(R.id.editTextSpecies);
+        edtFreq = findViewById(R.id.editTextWateringDays);
+        edtNotes = findViewById(R.id.editTextNotes);
+        btnSave = findViewById(R.id.buttonSave);
+
+        // Obtener ID de planta si estamos editando
+        plantId = getIntent().getStringExtra("plant_id");
+
+        if (plantId != null && !plantId.isEmpty()) {
+            // Modo edición - cargar datos de la planta
+            loadPlantData(plantId);
+        }
+
+        // Configurar botón guardar
+        btnSave.setOnClickListener(v -> save());
+    }
+
+    private void loadPlantData(String id) {
+        repo.getById(id).observe(this, plant -> {
+            if (plant != null) {
+                edtName.setText(plant.getName());
+                edtSpecies.setText(plant.getSpecies());
+                edtFreq.setText(String.valueOf(plant.getFreqDays()));
+                if (plant.getNotes() != null) {
+                    edtNotes.setText(plant.getNotes());
+                }
+            }
         });
     }
 
-    private static int safeInt(String s) {
-        try { return Integer.parseInt(s); }
-        catch (Exception e) { return 7; }
-    }
+    private void save() {
+        // Obtener valores
+        String name = edtName.getText().toString().trim();
+        String species = edtSpecies.getText().toString().trim();
+        String freqText = edtFreq.getText().toString().trim();
+        String notes = edtNotes.getText().toString().trim();
 
-    private static long addDays(long from, int days) {
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(from);
-        c.add(Calendar.DAY_OF_YEAR, days);
-        return c.getTimeInMillis();
+        // Validaciones
+        if (name.isEmpty()) {
+            edtName.setError("Ingresa el nombre de la planta");
+            return;
+        }
+
+        if (species.isEmpty()) {
+            edtSpecies.setError("Ingresa la especie");
+            return;
+        }
+
+        if (freqText.isEmpty()) {
+            edtFreq.setError("Ingresa los días entre riegos");
+            return;
+        }
+
+        int freq;
+        try {
+            freq = Integer.parseInt(freqText);
+            if (freq <= 0) {
+                edtFreq.setError("Debe ser mayor a 0");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            edtFreq.setError("Ingresa un número válido");
+            return;
+        }
+
+        // Crear o actualizar planta
+        Plant plant = new Plant();
+        plant.setName(name);
+        plant.setSpecies(species);
+        plant.setFreqDays(freq);
+        plant.setNotes(notes);
+        plant.setLastWatered(Timestamp.now());  // Usar Timestamp
+
+        if (plantId != null && !plantId.isEmpty()) {
+            // Actualizar planta existente
+            plant.setId(plantId);
+            repo.update(plant);
+            Toast.makeText(this, "Planta actualizada", Toast.LENGTH_SHORT).show();
+        } else {
+            // Insertar nueva planta
+            repo.insert(plant);
+            Toast.makeText(this, "Planta agregada", Toast.LENGTH_SHORT).show();
+        }
+
+        finish();
     }
 }

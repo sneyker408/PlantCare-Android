@@ -1,50 +1,107 @@
 package com.sneyker.plantcare.model;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Plant {
+
     private String id;
     private String name;
     private String species;
-    private int freqDays;       // frecuencia de riego (días)
-    private long lastWatered;   // millis (UTC)
-    private long nextWater;     // millis (UTC)
+    private int freqDays;
+    private Object lastWatered;  // CAMBIO: Acepta Object para manejar Long o Timestamp
     private String notes;
-    private String photoUrl;    // opcional
 
-    public Plant() {} // requerido por Firestore
-
-    public Plant(String id, String name, String species, int freqDays,
-                 long lastWatered, long nextWater, String notes, String photoUrl) {
-        this.id = id;
-        this.name = name;
-        this.species = species;
-        this.freqDays = freqDays;
-        this.lastWatered = lastWatered;
-        this.nextWater = nextWater;
-        this.notes = notes;
-        this.photoUrl = photoUrl;
+    public Plant() {
+        // Constructor vacío requerido por Firebase
     }
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    // Getters y Setters
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getId() {
+        return id;
+    }
 
-    public String getSpecies() { return species; }
-    public void setSpecies(String species) { this.species = species; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public int getFreqDays() { return freqDays; }
-    public void setFreqDays(int freqDays) { this.freqDays = freqDays; }
+    public String getName() {
+        return name;
+    }
 
-    public long getLastWatered() { return lastWatered; }
-    public void setLastWatered(long lastWatered) { this.lastWatered = lastWatered; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public long getNextWater() { return nextWater; }
-    public void setNextWater(long nextWater) { this.nextWater = nextWater; }
+    public String getSpecies() {
+        return species;
+    }
 
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
+    public void setSpecies(String species) {
+        this.species = species;
+    }
 
-    public String getPhotoUrl() { return photoUrl; }
-    public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+    public int getFreqDays() {
+        return freqDays;
+    }
+
+    public void setFreqDays(int freqDays) {
+        this.freqDays = freqDays;
+    }
+
+    /**
+     * Obtiene lastWatered como Timestamp
+     * Compatible con valores Long (timestamp) o Timestamp de Firebase
+     */
+    @Exclude
+    public Timestamp getLastWatered() {
+        if (lastWatered == null) {
+            return null;
+        }
+
+        // Si ya es Timestamp, devolverlo directamente
+        if (lastWatered instanceof Timestamp) {
+            return (Timestamp) lastWatered;
+        }
+
+        // Si es Long (formato antiguo), convertirlo a Timestamp
+        if (lastWatered instanceof Long) {
+            long millis = (Long) lastWatered;
+            return new Timestamp(millis / 1000, 0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Establece lastWatered (acepta Timestamp)
+     */
+    public void setLastWatered(Timestamp timestamp) {
+        this.lastWatered = timestamp;
+    }
+
+    /**
+     * Método usado por Firestore para serializar
+     */
+    public Object getLastWateredRaw() {
+        return lastWatered;
+    }
+
+    /**
+     * Método usado por Firestore para deserializar
+     */
+    public void setLastWateredRaw(Object value) {
+        this.lastWatered = value;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }

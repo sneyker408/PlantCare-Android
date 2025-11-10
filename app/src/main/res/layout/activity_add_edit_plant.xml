@@ -1,102 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:background="#0B3D2E">
+    android:background="@color/background_dark"
+    android:fillViewport="true">
 
-    <!-- Título -->
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="🌱 Añadir planta"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.02"
-        android:layout_marginBottom="20dp"
-        android:textColor="@android:color/white" />
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-        <LinearLayout
+        <!-- Título -->
+        <TextView
+            android:text="@string/agregar_planta"
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Nombre -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="16dp"
+            app:boxBackgroundMode="outline"
+            app:boxBackgroundColor="@color/background_card"
+            app:boxStrokeColor="@color/primary_light"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:startIconDrawable="@drawable/ic_leaf"
+            app:startIconTint="@color/text_hint">
 
-            <!-- Nombre de la planta -->
-            <EditText
-                android:id="@+id/edtName"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextName"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="🌿  Nombre de la planta"
-                android:inputType="textCapWords"
-                android:textColor="@android:color/white"
-                android:textColorHint="#B2DFDB"
-                android:backgroundTint="#80CBC4"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp" />
+                android:layout_height="wrap_content"
+                android:hint="@string/nombre_planta"
+                android:inputType="text"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Especie -->
-            <EditText
-                android:id="@+id/edtSpecies"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="12dp"
-                android:hint="🧬  Especie"
-                android:inputType="textCapWords"
-                android:textColor="@android:color/white"
-                android:textColorHint="#B2DFDB"
-                android:backgroundTint="#80CBC4"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp" />
+        <!-- Especie -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxBackgroundMode="outline"
+            app:boxBackgroundColor="@color/background_card"
+            app:boxStrokeColor="@color/primary_light"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp">
 
-            <!-- Frecuencia de riego (días) -->
-            <EditText
-                android:id="@+id/edtFreq"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextSpecies"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="12dp"
-                android:hint="💧  Frecuencia de riego (días)"
+                android:layout_height="wrap_content"
+                android:hint="@string/especie"
+                android:inputType="text"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Días de riego -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:boxBackgroundMode="outline"
+            app:boxBackgroundColor="@color/background_card"
+            app:boxStrokeColor="@color/primary_light"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:prefixText="Cada "
+            app:suffixText=" días">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextWateringDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/dias_riego"
                 android:inputType="number"
-                android:textColor="@android:color/white"
-                android:textColorHint="#B2DFDB"
-                android:backgroundTint="#80CBC4"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp" />
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Notas -->
-            <EditText
-                android:id="@+id/edtNotes"
+        <!-- Notas -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:boxBackgroundMode="outline"
+            app:boxBackgroundColor="@color/background_card"
+            app:boxStrokeColor="@color/primary_light"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="200">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextNotes"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_marginTop="12dp"
-                android:hint="📝  Notas"
-                android:gravity="top|start"
+                android:hint="@string/notas"
                 android:inputType="textMultiLine"
-                android:textColor="@android:color/white"
-                android:textColorHint="#B2DFDB"
-                android:backgroundTint="#80CBC4"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp"
-                android:paddingTop="14dp" />
+                android:gravity="top|start"
+                android:maxLength="200"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
-    </ScrollView>
+        <!-- Botón Guardar -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonSave"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/guardar"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:icon="@android:drawable/ic_menu_save"
+            app:iconGravity="start"
+            app:cornerRadius="16dp"
+            app:backgroundTint="@color/success" />
 
-    <!-- Botón Guardar -->
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:text="💾 Guardar"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:backgroundTint="#2E7D32"
-        android:letterSpacing="0.02" />
-</LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

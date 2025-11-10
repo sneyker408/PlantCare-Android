@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Gradiente suave verdoso -->
-    <item>
-        <shape android:shape="rectangle">
-            <gradient
-                android:startColor="#F3F8F2"
-                android:centerColor="#E8F3E6"
-                android:endColor="#DDEEDB"
-                android:angle="270"/>
-        </shape>
-    </item>
-
-    <!-- Veladura superior para dar profundidad -->
-    <item android:top="0dp">
-        <shape>
-            <gradient
-                android:startColor="#33FFFFFF"
-                android:endColor="#00FFFFFF"
-                android:angle="180"/>
-        </shape>
-    </item>
-</layer-list>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="135"
+        android:startColor="@color/background_dark"
+        android:centerColor="@color/primary_dark"
+        android:endColor="@color/surface"
+        android:type="linear" />
+</shape>

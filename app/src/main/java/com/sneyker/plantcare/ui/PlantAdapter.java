@@ -3,74 +3,155 @@ package com.sneyker.plantcare.ui;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.google.firebase.Timestamp;
 import com.sneyker.plantcare.R;
 import com.sneyker.plantcare.model.Plant;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
-public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.VH> {
+public class PlantAdapter extends ListAdapter<Plant, PlantAdapter.PlantViewHolder> {
+
+    private Listener listener;
 
     public interface Listener {
-        void onEdit(Plant p);
-        void onDelete(Plant p);
+        void onPlantClick(Plant plant);
+        void onEditPlant(Plant plant);
+        void onDeletePlant(Plant plant);
+        void onWaterNow(Plant plant);
     }
 
-    private final List<Plant> data = new ArrayList<>();
-    private final Listener listener;
-    private final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-
-    public PlantAdapter(Listener listener) { this.listener = listener; }
-
-    public void setData(List<Plant> list) {
-        data.clear();
-        data.addAll(list);
-        notifyDataSetChanged();
+    public PlantAdapter(Listener listener) {
+        super(DIFF_CALLBACK);
+        this.listener = listener;
     }
 
-    @NonNull @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
+    private static final DiffUtil.ItemCallback<Plant> DIFF_CALLBACK = new DiffUtil.ItemCallback<Plant>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Plant oldItem, @NonNull Plant newItem) {
+            return oldItem.getId() != null && oldItem.getId().equals(newItem.getId());
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Plant oldItem, @NonNull Plant newItem) {
+            return oldItem.getName().equals(newItem.getName()) &&
+                    oldItem.getSpecies().equals(newItem.getSpecies());
+        }
+    };
+
+    @NonNull
+    @Override
+    public PlantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_plant, parent, false);
-        return new VH(v);
+        return new PlantViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH h, int position) {
-        Plant p = data.get(position);
-        h.txtName.setText(p.getName());
-        h.txtSpecies.setText(p.getSpecies());
-        h.txtNext.setText(p.getNextWater() > 0
-                ? "Próximo riego: " + df.format(new Date(p.getNextWater()))
-                : "Próximo riego: —");
-
-        h.btnEdit.setOnClickListener(v -> listener.onEdit(p));
-        h.btnDelete.setOnClickListener(v -> listener.onDelete(p));
+    public void onBindViewHolder(@NonNull PlantViewHolder holder, int position) {
+        Plant plant = getItem(position);
+        holder.bind(plant, listener);
     }
 
-    @Override
-    public int getItemCount() { return data.size(); }
+    static class PlantViewHolder extends RecyclerView.ViewHolder {
 
-    static class VH extends RecyclerView.ViewHolder {
-        TextView txtName, txtSpecies, txtNext;
-        ImageButton btnEdit, btnDelete;
+        private TextView txtName;
+        private TextView txtSpecies;
+        private TextView txtNext;
+        private ImageButton btnEdit;
+        private ImageButton btnDelete;
+        private Button btnWater;
 
-        VH(@NonNull View itemView) {
+        public PlantViewHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.txtName);
             txtSpecies = itemView.findViewById(R.id.txtSpecies);
             txtNext = itemView.findViewById(R.id.txtNext);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
+            btnWater = itemView.findViewById(R.id.btnWater);
+        }
+
+        public void bind(Plant plant, Listener listener) {
+            // Nombre de la planta
+            if (plant.getName() != null) {
+                txtName.setText(plant.getName());
+            } else {
+                txtName.setText("Sin nombre");
+            }
+
+            // Especie
+            if (plant.getSpecies() != null) {
+                txtSpecies.setText(plant.getSpecies());
+            } else {
+                txtSpecies.setText("Sin especie");
+            }
+
+            // Calcular próximo riego
+            String nextWatering = getNextWater(plant);
+            txtNext.setText(nextWatering);
+
+            // Eventos de clic
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onPlantClick(plant);
+                }
+            });
+
+            btnEdit.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onEditPlant(plant);
+                }
+            });
+
+            btnDelete.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onDeletePlant(plant);
+                }
+            });
+
+            btnWater.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onWaterNow(plant);
+                }
+            });
+        }
+
+        private String getNextWater(Plant plant) {
+            if (plant == null) {
+                return "Sin información";
+            }
+
+            Timestamp lastWatered = plant.getLastWatered();
+            int freqDays = plant.getFreqDays();
+
+            if (lastWatered == null) {
+                return "Nunca regada";
+            }
+
+            try {
+                // Convertir Timestamp a Date
+                Date lastWateredDate = lastWatered.toDate();
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(lastWateredDate);
+                calendar.add(Calendar.DAY_OF_MONTH, freqDays);
+
+                Date nextDate = calendar.getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+                return "Próximo: " + sdf.format(nextDate);
+            } catch (Exception e) {
+                return "Error al calcular";
+            }
         }
     }
 }

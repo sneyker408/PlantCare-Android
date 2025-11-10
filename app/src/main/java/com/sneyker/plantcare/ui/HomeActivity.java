@@ -3,13 +3,8 @@ package com.sneyker.plantcare.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.PopupMenu;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -25,72 +20,26 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Inicializa Google client (si existe default_web_client_id en strings via google-services.json)
+        // Inicializa Google client
         setupGoogleClient();
 
-        Button btnMisPlantas = findViewById(R.id.btnMisPlantas);
-        Button btnAgregar    = findViewById(R.id.btnAgregar);
-        Button btnCerrar     = findViewById(R.id.btnCerrarSesion);
-        Button btnComunidad  = findViewById(R.id.btnComunidad); // si lo tienes en el layout
-        ImageButton btnMenu  = findViewById(R.id.btnMenu);      // si lo tienes en el layout (arriba a la derecha)
+        // Los IDs correctos según activity_home.xml
+        Button btnMyPlants = findViewById(R.id.buttonMyPlants);
+        Button btnFeed = findViewById(R.id.buttonFeed);
+        Button btnLogout = findViewById(R.id.buttonLogout);
 
         // Navegación principal
-        btnMisPlantas.setOnClickListener(v ->
+        btnMyPlants.setOnClickListener(v ->
                 startActivity(new Intent(this, PlantListActivity.class)));
 
-        btnAgregar.setOnClickListener(v ->
-                startActivity(new Intent(this, AddEditPlantActivity.class)));
+        btnFeed.setOnClickListener(v ->
+                startActivity(new Intent(this, FeedActivity.class)));
 
-        if (btnComunidad != null) {
-            btnComunidad.setOnClickListener(v ->
-                    startActivity(new Intent(this, FeedActivity.class)));
-        }
-
-        // Cerrar sesión total
-        btnCerrar.setOnClickListener(v -> signOutAll());
-
-        // Menú emergente (⋮)
-        if (btnMenu != null) {
-            btnMenu.setOnClickListener(v -> {
-                PopupMenu menu = new PopupMenu(this, v);
-                menu.getMenuInflater().inflate(R.menu.main_menu, menu.getMenu());
-                menu.setOnMenuItemClickListener(item -> {
-                    int id = item.getItemId();
-                    if (id == R.id.action_feed) {
-                        startActivity(new Intent(this, FeedActivity.class));
-                        return true;
-                    } else if (id == R.id.action_profile) {
-                        Toast.makeText(this, "Perfil (pendiente)", Toast.LENGTH_SHORT).show();
-                        return true;
-                    } else if (id == R.id.action_settings) {
-                        Toast.makeText(this, "Configuración (pendiente)", Toast.LENGTH_SHORT).show();
-                        return true;
-                    } else if (id == R.id.action_about) {
-                        showAboutDialog();
-                        return true;
-                    } else if (id == R.id.action_logout) {
-                        signOutAll();
-                        return true;
-                    }
-                    return false;
-                });
-                menu.show();
-            });
-        }
+        // Cerrar sesión
+        btnLogout.setOnClickListener(v -> signOutAll());
     }
 
-    /** Mostrar diálogo "Acerca de" sin usar BuildConfig */
-    private void showAboutDialog() {
-        String version = getAppVersionName();
-        String msg = "PlantCare\nVersión " + version;
-        new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.about_title))
-                .setMessage(msg)
-                .setPositiveButton(getString(R.string.about_ok), null)
-                .show();
-    }
-
-    /** Obtiene el versionName desde PackageManager (evitamos BuildConfig) */
+    /** Obtiene el versionName desde PackageManager */
     private String getAppVersionName() {
         try {
             return getPackageManager()
@@ -112,21 +61,29 @@ public class HomeActivity extends AppCompatActivity {
                     .build();
             googleClient = GoogleSignIn.getClient(this, gso);
         } else {
-            googleClient = null; // Proyecto sin Google configurado (no rompe)
+            googleClient = null;
         }
     }
 
     private void signOutAll() {
-        // Firebase
-        FirebaseAuth.getInstance().signOut();
+        // Confirmar cierre de sesión
+        new AlertDialog.Builder(this)
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Estás seguro de cerrar sesión?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    // Firebase
+                    FirebaseAuth.getInstance().signOut();
 
-        // Google: signOut + revoke (si está configurado)
-        if (googleClient != null) {
-            googleClient.signOut().addOnCompleteListener(task1 ->
-                    googleClient.revokeAccess().addOnCompleteListener(task2 -> goToLogin()));
-        } else {
-            goToLogin();
-        }
+                    // Google: signOut + revoke
+                    if (googleClient != null) {
+                        googleClient.signOut().addOnCompleteListener(task1 ->
+                                googleClient.revokeAccess().addOnCompleteListener(task2 -> goToLogin()));
+                    } else {
+                        goToLogin();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     private void goToLogin() {

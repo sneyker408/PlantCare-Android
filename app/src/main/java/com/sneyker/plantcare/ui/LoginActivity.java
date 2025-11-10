@@ -62,11 +62,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ResetPasswordActivity.class)));
 
         // ------- Google Sign-In -------
-        int webClientIdRes = getResources().getIdentifier(
-                "default_web_client_id", "string", getPackageName());
-
-        if (webClientIdRes != 0) {
-            String webClientId = getString(webClientIdRes);
+        try {
+            // ESTE string viene del google-services.json correcto
+            String webClientId = getString(
+                    getResources().getIdentifier(
+                            "default_web_client_id", "string", getPackageName()
+                    )
+            );
 
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(webClientId)
@@ -76,18 +78,19 @@ public class LoginActivity extends AppCompatActivity {
             googleClient = GoogleSignIn.getClient(this, gso);
 
             binding.btnGoogle.setOnClickListener(v -> {
-                // << CLAVE >>: limpiar la cuenta cacheada ANTES de abrir el intent
+                // limpiar la cuenta cacheada ANTES de abrir el intent
                 googleClient.signOut().addOnCompleteListener(done -> {
                     Intent intent = googleClient.getSignInIntent();
-                    // Este flag ayuda a evitar que el sistema re-use la tarea previa
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivityForResult(intent, RC_GOOGLE);
                 });
             });
 
-        } else {
+        } catch (Exception ex) {
+            // Si no está el string (JSON viejo), deshabilita el botón y muestra pista
             binding.btnGoogle.setEnabled(false);
             binding.btnGoogle.setAlpha(0.5f);
+            Toast.makeText(this, "Configura SHA-1/SHA-256 y re-descarga el google-services.json", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -106,6 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                             .addOnSuccessListener(a -> goHome())
                             .addOnFailureListener(e ->
                                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                } else {
+                    Toast.makeText(this, "Cuenta de Google nula", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 Toast.makeText(this, "Error con Google: " + e.getMessage(), Toast.LENGTH_SHORT).show();

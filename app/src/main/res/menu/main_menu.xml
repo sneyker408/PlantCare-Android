@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_feed"     android:title="Comunidad 🌍"/>
-    <item android:id="@+id/action_profile"  android:title="Mi perfil"/>
-    <item android:id="@+id/action_settings" android:title="Configuración"/>
-    <item android:id="@+id/action_about"    android:title="Acerca de"/>
-    <item android:id="@+id/action_logout"   android:title="Cerrar sesión"/>
+    <item
+        android:id="@+id/action_feed"
+        android:title="Comunidad" />
+    <item
+        android:id="@+id/action_profile"
+        android:title="Perfil" />
+    <item
+        android:id="@+id/action_settings"
+        android:title="Configuración" />
+    <item
+        android:id="@+id/action_about"
+        android:title="Acerca de" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Cerrar sesión" />
 </menu>
