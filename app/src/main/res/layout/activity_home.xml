@@ -35,6 +35,21 @@
         android:textStyle="bold"
         android:layout_marginBottom="48dp" />
 
+    <!-- Botón Agregar Planta (NUEVO) -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonAddPlant"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="@string/agregar_planta"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:icon="@android:drawable/ic_input_add"
+        app:iconGravity="start"
+        app:iconTint="@color/text_primary"
+        app:cornerRadius="16dp"
+        app:backgroundTint="@color/success"
+        android:layout_marginBottom="16dp" />
+
     <!-- Botón Mis Plantas -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonMyPlants"

@@ -24,11 +24,14 @@ public class HomeActivity extends AppCompatActivity {
         setupGoogleClient();
 
         // Los IDs correctos según activity_home.xml
+        Button btnAddPlant = findViewById(R.id.buttonAddPlant);
         Button btnMyPlants = findViewById(R.id.buttonMyPlants);
         Button btnFeed = findViewById(R.id.buttonFeed);
         Button btnLogout = findViewById(R.id.buttonLogout);
 
         // Navegación principal
+        btnAddPlant.setOnClickListener(v ->
+                startActivity(new Intent(this, AddEditPlantActivity.class)));
         btnMyPlants.setOnClickListener(v ->
                 startActivity(new Intent(this, PlantListActivity.class)));
 

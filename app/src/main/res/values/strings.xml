@@ -56,6 +56,21 @@
     <string name="descripcion_icono_planta">Icono de planta</string>
     <string name="descripcion_boton_agregar">Agregar nueva planta</string>
 
+
+
+    <!-- Feed -->
+
+    <string name="comentarios">Comentarios</string>
     <string name="sin_fecha_programada">Sin fecha programada</string>
+    <string name="usuario">Usuario</string>
+    <string name="me_gusta">Me gusta</string>
+    <string name="crear_post">Crear post</string>
+    <string name="feed_vacio">No hay posts aún. ¡Sé el primero en compartir!</string>
+    <string name="descripcion_post">Descripción (opcional)</string>
+    <string name="escribe_comentario">Escribe un comentario...</string>
+
+    <string name="enviar">Enviar</string>
+
+
 
 </resources>
