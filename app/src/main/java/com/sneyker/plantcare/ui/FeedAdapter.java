@@ -115,26 +115,13 @@ public class FeedAdapter extends ListAdapter<FeedPost, FeedAdapter.FeedViewHolde
             // Comentarios
             btnComment.setText("💬 " + post.getCommentsCount());
 
-            // Eventos con animación
+            // Eventos - NO cambiar estado localmente
             btnLike.setOnClickListener(v -> {
                 if (listener != null) {
-                    // Animar el botón
+                    // Solo animar, NO cambiar el estado localmente
                     animateLike(v);
 
-                    // Cambiar el estado localmente para feedback inmediato
-                    post.setLikedByCurrentUser(!post.isLikedByCurrentUser());
-
-                    // Actualizar visualmente
-                    if (post.isLikedByCurrentUser()) {
-                        post.setLikes(post.getLikes() + 1);
-                    } else {
-                        post.setLikes(Math.max(0, post.getLikes() - 1));
-                    }
-
-                    txtLikes.setText(String.valueOf(post.getLikes()));
-                    updateLikeIcon(post.isLikedByCurrentUser());
-
-                    // Llamar al listener
+                    // Llamar al listener para que Firestore maneje todo
                     listener.onLikeClick(post);
                 }
             });
@@ -149,8 +136,10 @@ public class FeedAdapter extends ListAdapter<FeedPost, FeedAdapter.FeedViewHolde
         private void updateLikeIcon(boolean isLiked) {
             if (isLiked) {
                 btnLike.setImageResource(android.R.drawable.star_big_on);
+                btnLike.setColorFilter(0xFFFFD700); // Dorado cuando está activo
             } else {
                 btnLike.setImageResource(android.R.drawable.star_big_off);
+                btnLike.setColorFilter(0xFFB2DFDB); // Color hint cuando está inactivo
             }
         }
 

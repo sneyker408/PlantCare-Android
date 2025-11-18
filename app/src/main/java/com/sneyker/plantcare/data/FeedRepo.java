@@ -1,5 +1,9 @@
 package com.sneyker.plantcare.data;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.Timestamp;
@@ -69,50 +73,68 @@ public class FeedRepo {
     }
 
     public void toggleLike(FeedPost post) {
+        if (post == null || post.getId() == null) {
+            return;
+        }
+
         String postId = post.getId();
         String likeId = currentUserId + "_" + postId;
+        boolean isLiked = post.isLikedByCurrentUser();
 
-        db.collection("likes")
-                .document(likeId)
+        // Ejecutar en segundo plano sin bloquear el UI
+        if (isLiked) {
+            // Quitar like
+            db.collection("likes")
+                    .document(likeId)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        // Actualizar contador en Firestore
+                        updateLikeCount(postId, -1);
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Error removing like: " + e.getMessage());
+                        // Opcional: Revertir UI si falla
+                    });
+        } else {
+            // Agregar like
+            Map<String, Object> like = new HashMap<>();
+            like.put("userId", currentUserId);
+            like.put("postId", postId);
+            like.put("timestamp", Timestamp.now());
+
+            db.collection("likes")
+                    .document(likeId)
+                    .set(like)
+                    .addOnSuccessListener(aVoid -> {
+                        // Actualizar contador en Firestore
+                        updateLikeCount(postId, 1);
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Error adding like: " + e.getMessage());
+                        // Opcional: Revertir UI si falla
+                    });
+        }
+    }
+
+    /**
+     * Actualizar contador de likes de forma segura
+     */
+    private void updateLikeCount(String postId, int delta) {
+        db.collection("feed")
+                .document(postId)
                 .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        // Ya dio like, quitarlo
-                        documentSnapshot.getReference().delete()
-                                .addOnSuccessListener(aVoid -> {
-                                    // Decrementar contador
-                                    db.collection("feed").document(postId)
-                                            .get()
-                                            .addOnSuccessListener(doc -> {
-                                                if (doc.exists()) {
-                                                    int currentLikes = doc.getLong("likes") != null
-                                                            ? doc.getLong("likes").intValue() : 0;
-                                                    doc.getReference().update("likes", Math.max(0, currentLikes - 1));
-                                                }
-                                            });
-                                });
-
-                    } else {
-                        // No ha dado like, agregarlo
-                        Map<String, Object> like = new HashMap<>();
-                        like.put("userId", currentUserId);
-                        like.put("postId", postId);
-                        like.put("timestamp", Timestamp.now());
-
-                        db.collection("likes").document(likeId).set(like)
-                                .addOnSuccessListener(aVoid -> {
-                                    // Incrementar contador
-                                    db.collection("feed").document(postId)
-                                            .get()
-                                            .addOnSuccessListener(doc -> {
-                                                if (doc.exists()) {
-                                                    int currentLikes = doc.getLong("likes") != null
-                                                            ? doc.getLong("likes").intValue() : 0;
-                                                    doc.getReference().update("likes", currentLikes + 1);
-                                                }
-                                            });
-                                });
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        Long currentLikes = doc.getLong("likes");
+                        int newLikes = (currentLikes != null)
+                                ? currentLikes.intValue() + delta
+                                : Math.max(0, delta);
+                        newLikes = Math.max(0, newLikes); // No permitir negativos
+                        doc.getReference().update("likes", newLikes);
                     }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error updating like count: " + e.getMessage());
                 });
     }
 
@@ -172,13 +194,24 @@ public class FeedRepo {
     }
 
     private void checkIfLiked(FeedPost post) {
+        if (post == null || post.getId() == null) {
+            return;
+        }
+
         String likeId = currentUserId + "_" + post.getId();
 
+        // Listener en tiempo real para el estado del like
         db.collection("likes")
                 .document(likeId)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    post.setLikedByCurrentUser(documentSnapshot.exists());
+                .addSnapshotListener((documentSnapshot, error) -> {
+                    if (error != null) {
+                        post.setLikedByCurrentUser(false);
+                        return;
+                    }
+
+                    if (documentSnapshot != null) {
+                        post.setLikedByCurrentUser(documentSnapshot.exists());
+                    }
                 });
     }
 }
