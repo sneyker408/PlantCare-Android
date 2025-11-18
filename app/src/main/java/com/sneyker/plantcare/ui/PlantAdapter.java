@@ -153,6 +153,7 @@ public class PlantAdapter extends ListAdapter<Plant, PlantAdapter.PlantViewHolde
             } else {
                 txtSize.setVisibility(View.GONE);
             }
+
         }
 
         private String getNextWater(Plant plant) {
