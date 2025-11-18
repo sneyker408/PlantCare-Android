@@ -123,6 +123,36 @@ public class PlantAdapter extends ListAdapter<Plant, PlantAdapter.PlantViewHolde
                     listener.onWaterNow(plant);
                 }
             });
+            // Ubicación
+            TextView txtLocation = itemView.findViewById(R.id.txtLocation);
+            if (plant.getLocation() != null && !plant.getLocation().isEmpty()) {
+                txtLocation.setVisibility(View.VISIBLE);
+                txtLocation.setText("📍 " + plant.getLocation());
+            } else {
+                txtLocation.setVisibility(View.GONE);
+            }
+
+// Nivel de luz
+            TextView txtLight = itemView.findViewById(R.id.txtLight);
+            if (plant.getLightLevel() != null) {
+                txtLight.setVisibility(View.VISIBLE);
+                String icon = plant.getLightLevel().equals("Alta") ? "☀️" :
+                        plant.getLightLevel().equals("Baja") ? "🌑" : "🌤️";
+                txtLight.setText(icon + " " + plant.getLightLevel());
+            } else {
+                txtLight.setVisibility(View.GONE);
+            }
+
+// Tamaño
+            TextView txtSize = itemView.findViewById(R.id.txtSize);
+            if (plant.getSize() != null) {
+                txtSize.setVisibility(View.VISIBLE);
+                String icon = plant.getSize().equals("Pequeña") ? "🌱" :
+                        plant.getSize().equals("Grande") ? "🌳" : "🪴";
+                txtSize.setText(icon + " " + plant.getSize());
+            } else {
+                txtSize.setVisibility(View.GONE);
+            }
         }
 
         private String getNextWater(Plant plant) {

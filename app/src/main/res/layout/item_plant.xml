@@ -101,6 +101,48 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp" />
 
+
+        </LinearLayout>
+        <!-- Información adicional -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <!-- Ubicación -->
+            <TextView
+                android:id="@+id/txtLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📍 Sala"
+                android:textColor="@color/text_hint"
+                android:textSize="12sp"
+                android:layout_marginEnd="12dp"
+                android:visibility="gone" />
+
+            <!-- Nivel de luz -->
+            <TextView
+                android:id="@+id/txtLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="☀️ Media"
+                android:textColor="@color/text_hint"
+                android:textSize="12sp"
+                android:layout_marginEnd="12dp"
+                android:visibility="gone" />
+
+            <!-- Tamaño -->
+            <TextView
+                android:id="@+id/txtSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🪴 Mediana"
+                android:textColor="@color/text_hint"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </LinearLayout>

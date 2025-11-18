@@ -24,6 +24,11 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
 
+    <!-- Permisos para seleccionar fotos -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
     <!-- Android 13+ Media permissions -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
