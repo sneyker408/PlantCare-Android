@@ -31,7 +31,7 @@ public class App extends Application implements Configuration.Provider {
         Log.d(TAG, "✅ Firebase inicializado");
 
         // App Check para seguridad
-        setupAppCheck();
+//        setupAppCheck();
 
         // Firestore con persistencia offline
         setupFirestore();
@@ -43,17 +43,17 @@ public class App extends Application implements Configuration.Provider {
     /**
      * Configura Firebase App Check (seguridad)
      */
-    private void setupAppCheck() {
-        FirebaseAppCheck appCheck = FirebaseAppCheck.getInstance();
-
-        // DEBUG: Usa esto en desarrollo
-        appCheck.installAppCheckProviderFactory(DebugAppCheckProviderFactory.getInstance());
-
-        // PRODUCCIÓN: Cambia a Play Integrity cuando publiques
-        // appCheck.installAppCheckProviderFactory(PlayIntegrityAppCheckProviderFactory.getInstance());
-
-        Log.d(TAG, "✅ App Check configurado");
-    }
+//    private void setupAppCheck() {
+//        FirebaseAppCheck appCheck = FirebaseAppCheck.getInstance();
+//
+//        // DEBUG: Usa esto en desarrollo
+//        appCheck.installAppCheckProviderFactory(DebugAppCheckProviderFactory.getInstance());
+//
+//        // PRODUCCIÓN: Cambia a Play Integrity cuando publiques
+//        // appCheck.installAppCheckProviderFactory(PlayIntegrityAppCheckProviderFactory.getInstance());
+//
+//        Log.d(TAG, "✅ App Check configurado");
+//    }
 
     /**
      * Configura Firestore con caché offline
